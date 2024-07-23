@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertical Timeline</title>
+    <style>
+        body {
+            background: url('https://www.pngall.com/wp-content/uploads/5/Europe-Map-PNG-Picture.png') no-repeat center center fixed; /* Add your background image */
+            background-size: cover; /* Cover the entire screen */
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Black overlay with 60% opacity */
+            z-index: -1; /* Place the overlay behind the content */
+        }
+        .timeline {
+            position: relative;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: #e0e0e0;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+        .event {
+            padding: 15px;
+            position: relative;
+            border-radius: 8px;
+            background: #333;
+            margin: 10px 0;
+            width: 100%; /* Full width for mobile */
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: column; /* Stack content vertically on mobile */
+        }
+        .event:nth-child(even) {
+            text-align: center;
+        }
+        .event:nth-child(odd) {
+            text-align: center;
+        }
+        .event .date {
+            text-shadow: 0 0 3px grey, 0 0 3px grey, 0 0 5px #fff, 0 0 5px grey;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            margin: 10px 0; /* Margin for spacing */
+        }
+        .event .description {
+            font-size: 16px;
+            color: #e0e0e0;
+        }
+        .event::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #e0e0e0; /* Circle background color */
+            border-radius: 50%;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+        .event:nth-child(even)::before {
+            left: auto;
+            right: 50%;
+            transform: translateX(50%);
+        }
+        .notes-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #00bfff;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+        }
+        .notes-button:hover {
+            background-color: #009acd;
+        }
+        .notes-popup {
+            display: none;
+            position: fixed;
+            top: 20%;
+            width: 87%;
+            background: #fff;
+            color: #333;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            overflow-y: auto;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .notes-popup h2 {
+            margin-top: 0;
+        }
+        .notes-popup button {
+            background-color: #a8d9ff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .info-popup button:hover, .notes-popup button:hover {
+            background-color: #0056b3;
+            border-radius: 50%;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div> <!-- Overlay for background image -->
+    <div class="timeline">
+        <div class="event">
+            <div class="date">1789</div>
+            <div class="description">French Revolution begins, inspiring nationalist movements across Europe.</div>
+        </div>
+        <div class="event">
+            <div class="date">1797</div>
+            <div class="description">Napoleon Bonaparte invades Italy, spreading revolutionary ideas.</div>
+        </div>
+        <div class="event">
+            <div class="date">1804</div>
+            <div class="description">Napoleon's Civil Code is introduced, promoting legal equality.</div>
+        </div>
+        <div class="event">
+            <div class="date">1814-1815</div>
+            <div class="description">Congress of Vienna redraws Europe's political map, restoring monarchies.</div>
+        </div>
+        <div class="event">
+            <div class="date">1821-1829</div>
+            <div class="description">Greek War of Independence from the Ottoman Empire.</div>
+        </div>
+        <div class="event">
+            <div class="date">1830</div>
+            <div class="description">July Revolution in France leads to Louis-Philippe's rise.</div>
+        </div>
+        <div class="event">
+            <div class="date">1834</div>
+            <div class="description">Zollverein customs union established in Germany.</div>
+        </div>
+        <div class="event">
+            <div class="date">1848</div>
+            <div class="description">Revolutions of 1848 across Europe demand national unity and democratic reforms.</div>
+        </div>
+        <div class="event">
+            <div class="date">1859</div>
+            <div class="description">Unification of Italy begins with Cavour and Garibaldi's campaigns.</div>
+        </div>
+        <div class="event">
+            <div class="date">1861</div>
+            <div class="description">Kingdom of Italy proclaimed with Victor Emmanuel II as king.</div>
+        </div>
+        <div class="event">
+            <div class="date">1864-1871</div>
+            <div class="description">Unification of Germany led by Otto von Bismarck.</div>
+        </div>
+        <div class="event">
+            <div class="date">1870-1871</div>
+            <div class="description">Franco-Prussian War leads to the establishment of the German Empire.</div>
+        </div>
+        <div class="event">
+            <div class="date">1871</div>
+            <div class="description">German Empire proclaimed in the Hall of Mirrors at Versailles.</div>
+        </div>
+        <div class="event">
+           <div class="date">1905</div>
+            <div class="description">First Russian Revolution leads to limited reforms and heightened nationalist sentiments.</div>
+       
+            </div>
+    </div>
+        <!-- Add more events here with the same structure -->
+    
+
+    <div id="notes-popup" class="notes-popup">
+        <button onclick="closeNotesPopup()">✖️</button>
+        <h2>Chapter Notes</h2>
+
+    <h2>The Rise of Nationalism in Europe</h2>
+
+    <h3>Frédéric Sorrieu's Vision of the World</h3>
+    <p>Frédéric Sorrieu, a French artist, in 1848, prepared a series of four prints visualizing his dream of a world made up of democratic and Social Republics.</p>
+    <p>The first print shows the people of Europe and America marching in a long train and offering homage to the Statue of Liberty as they pass it. The torch of Enlightenment was carried by a female figure in one hand and the Charter of the Rights of Man in the other. On the earth in the foreground lie the shattered remains of the symbols of absolutist institutions.</p>
+    <p>In Sorrieu’s utopian vision, the people of the world are grouped as distinct nations, identified through their flags and national costume. The procession was led by the United States and Switzerland, followed by France and Germany. Following the German people are the people of Austria, the Kingdom of the Two Sicilies, Lombardy, Poland, England, Ireland, Hungary, and Russia. From the heavens above, Christ, saints, and angels gaze upon the scene. They have been used by the artist to symbolize fraternity among the nations of the world.</p>
+    <p>During the nineteenth century, nationalism emerged as a force which brought huge changes in the political and mental world of Europe. The end result of these changes was the emergence of the nation-state.</p>
+
+    <h3>The French Revolution and the Idea of the Nation</h3>
+    <p>In 1789, Nationalism came with the French Revolution and the political and constitutional changes led to the transfer of sovereignty from the monarchy to a body of French citizens. Various measures and practices were introduced, such as the ideas of la patrie (the fatherland) and le citoyen (the citizen). A new French flag, the tricolour, was chosen to replace the former one.</p>
+    <p>Democracy was destroyed in France by Napoleon, and the Civil Code of 1804, known as the Napoleonic Code, did away with all privileges based on birth, established equality before the law, and secured the right to property.</p>
+
+    <h3>The Making of Nationalism in Europe</h3>
+    <p>Germany, Italy, and Switzerland were divided into kingdoms, duchies, and cantons whose rulers had their autonomous territories.</p>
+
+    <h3>The Aristocracy and the New Middle Class</h3>
+    <p>The Aristocracy was the dominant class on the continent politically and socially. The majority of the population was made up of the peasantry. Industrialization began in England in the second half of the eighteenth century. New social groups came into being: a working-class population and a middle class made up of industrialists, businessmen, and professionals.</p>
+
+    <h3>What Did Liberal Nationalism Stand For?</h3>
+    <p>The term ‘liberalism’ derives from the Latin root liber, meaning free. The right to vote and to get elected was granted exclusively to property-owning men. Men without property and all women were excluded from political rights.</p>
+    <p>In 1834, a customs union or Zollverein was formed at the initiative of Prussia and joined by most of the German states. The union abolished tariff barriers and reduced the number of currencies from over thirty to two.</p>
+
+    <h3>A New Conservatism after 1815</h3>
+    <p>In 1815, European governments were driven by a spirit of conservatism. Conservatives believed in monarchy, the Church, social hierarchies, and property and that the family should be preserved. A modern army, an efficient bureaucracy, a dynamic economy, and the abolition of feudalism and serfdom could strengthen the autocratic monarchies of Europe.</p>
+    <p>In 1815, representatives of the European powers – Britain, Russia, Prussia, and Austria met in Vienna to draw up a settlement for Europe. The Bourbon dynasty was restored to power, and France lost the territories it had annexed under Napoleon.</p>
+    <p>The major issue taken up by the liberal nationalists, who criticized the new conservative order, was the freedom of the press.</p>
+
+    <h3>The Revolutionaries</h3>
+    <p>In 1815, secret societies were formed in many European states to train revolutionaries and spread their ideas. Revolutionaries opposed monarchical forms and fought for liberty and freedom.</p>
+    <p>The Italian revolutionary Giuseppe Mazzini, born in Genoa in 1807, founded two more underground societies, the first being Young Italy in Marseilles. Secondly, he founded Young Europe in Berne, whose members were like-minded young men from Poland, France, Italy, and the German states.</p>
+
+    <h3>The Age of Revolutions: 1830-1848</h3>
+    <p>In July 1830, Bourbon Kings were overthrown by liberal revolutionaries who installed a constitutional monarchy with Louis Philippe at its head. The July Revolution sparked an uprising in Brussels which led to Belgium breaking away from the United Kingdom of the Netherlands. In 1821, Greeks struggled for independence.</p>
+
+    <h3>The Romantic Imagination and National Feeling</h3>
+    <p>Culture played an important role in creating the idea of the nation: art and poetry, stories, and music helped express and shape nationalist feelings. Romanticism was a cultural movement which sought to develop a particular form of nationalist sentiment. Language also played an important role in developing nationalist sentiments. The Russian language was imposed everywhere, and in 1831, an armed rebellion against Russian rule took place, which was ultimately crushed.</p>
+
+    <h3>Hunger, Hardship, and Popular Revolt</h3>
+    <p>Europe faced economic hardships in the 1830s. The first half of the nineteenth century saw an enormous increase in population all over Europe. The rise of food prices or a year of bad harvest led to widespread pauperism in towns and countries. In 1848, food shortages and widespread unemployment brought the population of Paris out on the roads.</p>
+
+    <h3>The Revolution of the Liberals</h3>
+    <p>In 1848, a revolution led by the educated middle classes was underway. Men and women of the liberal middle class demanded the creation of a nation-state on parliamentary principles – a constitution, freedom of the press, and freedom of association.</p>
+    <p>A large number of political associations came together in Frankfurt to vote for an all-German National Assembly. On 18 May 1848, 831 elected representatives marched to take their places in the Frankfurt parliament convened in the Church of St Paul.</p>
+    <p>The Constitution drafted for the German nation was headed by a monarchy, subject to a Parliament. The Crown was offered to Friedrich Wilhelm IV, King of Prussia, but he rejected it and joined other monarchs to oppose the elected assembly. The Middle Class dominated the Parliament, and a large number of women participated in the liberal movement. Women formed their own political associations, founded newspapers, and took part in political meetings and demonstrations, but they were still denied suffrage rights during the election of the Assembly.</p>
+    <p>In the years after 1848, the autocratic monarchies of Central and Eastern Europe began to introduce the changes that had already taken place in Western Europe before 1815. Thus, serfdom and bonded labour were abolished both in the Habsburg dominions and in Russia.</p>
+
+    <h3>The Making of Germany and Italy</h3>
+    <p>Germany – Can the Army Be the Architect of a Nation?</p>
+    <p>Nationalism in Europe moved away after 1848, and Germany and Italy came to be unified as nation-states. Prussia took over the leadership of the movement for national unification. The architect of this process was its chief minister, Otto von Bismarck, and it was carried out with the help of the Prussian army and bureaucracy.</p>
+    <p>In January 1871, the Prussian King, William I, was proclaimed German Emperor. An assembly was held to proclaim the new German Empire. The process of nation-building demonstrated the dominance of Prussian state power. The currency, banking, legal, and judicial systems in Germany were modernized.</p>
+    
+    <p>Italy Unified</p>
+    <p>Italy was divided into seven states in the middle of the nineteenth century, and among all the seven states, Sardinia-Piedmont was ruled by an Italian princely house. All the regions were dominated by different kings. In the 1830s, Giuseppe Mazzini formed a secret society called Young Italy.</p>
+    <p>The movement was led by Chief Minister Cavour. In 1859, Sardinia-Piedmont defeated Austrian forces. In 1860, they marched into South Italy and the Kingdom of the Two Sicilies and succeeded in winning the support of the local peasants. In 1861 Victor Emmanuel II was proclaimed king of united Italy.</p>
+
+    <h3>The Strange Case of Britain</h3>
+    <p>Great Britain was the model of the nation, and prior to the eighteenth century, there was no British nation. The nation became
+<p>powerful as it steadily grew in wealth, importance, and power. The Act of Union (1707) between England and Scotland resulted in the formation of the ‘United Kingdom of Great Britain,’ which allowed England to impose its influence on Scotland. In 1801, Ireland was forcibly incorporated into the United Kingdom. The symbols of the new Britain – the British flag (Union Jack), the national anthem (God Save the King), and the English language – were actively promoted.</p>
+
+    <h3>Visualizing the Nation</h3>
+    <p>In the eighteenth and nineteenth centuries, artists represented a country as a person and nations as female figures. During the French Revolution, female figures portrayed ideas such as Liberty, Justice, and the Republic. Liberty is represented as a red cap or the broken chain, and Justice as a blindfolded woman carrying a pair of weighing scales.</p>
+
+    <h3>Nationalism and Imperialism</h3>
+    <p>Nationalism was no longer retained after the last quarter of the nineteenth century. After 1871, the most tensioned area was called the Balkans, a region comprising modern-day Romania, Bulgaria, Albania, Greece, Macedonia, Croatia, Bosnia-Herzegovina, Slovenia, Serbia, and Montenegro.</p>
+    <p>The Ottoman Empire made the Balkans region explosive, and all through the nineteenth century, they strengthened themselves through modernization and internal reforms. Due to various conflicts, the Balkans became an area of intense conflict.</p>
+    <p>During this period, intense rivalry built among the European powers over trade and colonies as well as naval and military might, which led to a series of wars in the region and, finally, the First World War.</p>
+    <p>In 1914, Europe was devastated by Nationalism, aligned with imperialism. Anti-imperial movements developed, but they all struggled to form independent nation-states. However, the idea of ‘nation-states’ was accepted as natural and universal.</p>
+
+    <h3>Frequently Asked Questions on CBSE Class 10 History Notes Chapter 1: The Rise of Nationalism in Europe</h3>
+    <h4>Q1: What is nationalism?</h4>
+    <p>The desire/wish of a group of people who have similar races, cultures, and languages to form a country is termed nationalism.</p>
+
+    <h4>Q2: How to induce patriotism in a person?</h4>
+    <p>Children and young adults must be taught at a young age about the importance of patriotism. Love for one’s own country must be instilled in every child’s mind and heart.</p>
+
+    <h4>Q3: How to protect our nation from criticism?</h4>
+    <ul>
+        <li>Do not speak ill of your country</li>
+        <li>Do not misuse your national flag</li>
+        <li>Be polite and convey your positive thoughts about your country to other nationals.</li>
+    </ul>
+
+ Source:
+ <a href="https://byjus.com/cbse-notes/class-10-social-science-history-chapter-1-the-rise-of-nationalism-in-europe/">BYJU'S</a>
+
+   </div>
+
+    
+    <button class="notes-button" onclick="showNotesPopup()">Chapter Notes</button>
+
+    <script>
+        function showInfo(date) {
+            var infoTitle = document.getElementById('info-title');
+            var infoContent = document.getElementById('info-content');
+            var infoPopup = document.getElementById('info-popup');
+
+            // Set content based on the date
+            switch(date) {
+                case '1789':
+                    infoTitle.textContent = '1789';
+                    infoContent.textContent = 'Notes for the year 1789. Details about the French Revolution and its impact...';
+                    break;
+                case '1797':
+                    infoTitle.textContent = '1797';
+                    infoContent.textContent = 'Notes for the year 1797. Details about Napoleon’s invasion of Italy...';
+                    break;
+                case '1804':
+                    infoTitle.textContent = '1804';
+                    infoContent.textContent = 'Notes for the year 1804. Details about Napoleon’s Civil Code...';
+                    break;
+                // Add more cases for other dates
+            }
+
+            infoPopup.style.display = 'block';
+        }
+
+        function closeInfoPopup() {
+            var infoPopup = document.getElementById('info-popup');
+            infoPopup.style.display = 'none';
+        }
+
+        function showNotesPopup() {
+            var notesPopup = document.getElementById('notes-popup');
+            notesPopup.style.display = 'block';
+        }
+
+        function closeNotesPopup() {
+            var notesPopup = document.getElementById('notes-popup');
+            notesPopup.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
